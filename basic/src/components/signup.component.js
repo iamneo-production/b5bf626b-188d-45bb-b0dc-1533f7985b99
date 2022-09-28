@@ -40,7 +40,14 @@ export default class SignUp extends Component {
             placeholder="Enter Phone Number"
           />
         </div>
-
+        <div className="mb-3">
+          <label>Address</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter Address"
+          />
+        </div>
         <div className="d-grid">
           <button type="submit" className="btn btn-primary">
             Sign Up
