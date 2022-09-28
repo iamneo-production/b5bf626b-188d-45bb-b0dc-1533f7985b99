@@ -1,62 +1,92 @@
-import React, { Component } from 'react'
 
-export default class SignUp extends Component {
-  render() {
-    return (
-      <form action="/register" method="POST">
+
+
+import React,{ useState } from 'react'
+import Axios from 'axios';
+
+
+function SignUp(){
+  const url='http://localhost:8080/response'
+  const [data,setData]=useState({
+    name:'',
+    email:'',
+    phone:'',
+    password:''
+  })
+  function submit(e){
+ e.preventDefault();
+ Axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+  Axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';     
+ Axios.post(url,{
+    name:data.name,
+    email:data.email,
+    phone:data.phone,
+    password:data.password
+ }).then
+  (res=>{
+    console.log(res);
+  });
+}
+  function handle(e){
+const newdata={...data}
+newdata[e.target.id]=e.target.value
+setData(newdata)
+console.log(newdata)
+  }
+  return(
+      <form onSubmit={(e)=> submit(e)} >
         <h3>Sign Up</h3>
 
         <div className="mb-3">
           <label>Username</label>
+
           <input
-            type="text"
-            className="form-control"
-            placeholder="Enter Username"
+          onChange={(e)=>handle(e)} 
+          id='name'
+          value={data.name}
+          placeholder='name'
+          type='text'
           />
         </div>
 
         <div className="mb-3">
           <label>Email address</label>
           <input
-            type="email"
-            className="form-control"
-            placeholder="Enter Email"
+          onChange={(e)=>handle(e)} 
+          id='email'
+          value={data.email}
+          placeholder='email'
+          type='text'
           />
+
         </div>
 
         <div className="mb-3">
           <label>Password</label>
           <input
+            onChange={(e)=>handle(e)} 
             type="password"
-            className="form-control"
-            placeholder="Enter Password"
+            id="password"
+            value={data.password}
+            placeholder="Password"
           />
         </div>
         <div className="mb-3">
           <label>Phone Number</label>
           <input
+            onChange={(e)=>handle(e)} 
             type="integer"
-            className="form-control"
+    id="phone"
             placeholder="Enter Phone Number"
           />
         </div>
-        <div className="mb-3">
-          <label>Address</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter Address"
-          />
-        </div>
+
         <div className="d-grid">
           <button type="submit" className="btn btn-primary">
             Sign Up
           </button>
         </div>
-        <p className="forgot-password text-right">
-          Already registered <a href="/sign-in">sign in?</a>
-        </p>
       </form>
-    )
-  }
+  )
 }
+export default SignUp
